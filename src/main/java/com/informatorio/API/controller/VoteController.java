@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -24,16 +25,19 @@ public class VoteController {
         voteService.createVote(vote);
         return ResponseEntity.status(HttpStatus.OK).body("Vote created");
     }
-   // @GetMapping("{id}")
-    //public Set<Vote> getVotesByIdUser(Long id){
-      //  return voteService.getVotesByIdUser(id);
-    //}
-    //@GetMapping("{id}")
-    //public Set<User> findByReviewId(Long id){
-      //return voteService.findByReviewId(id);
-    //}
+    @GetMapping("/{id}")
+    public Vote getVoteById(@PathVariable Long id){
+        return voteService.findById(id);
+    }
+    @GetMapping("/voteUser/{id}")
+    public Set<Vote> getVoteByUser(@PathVariable("id") Long id){
+        return voteService.getVoteByUser(id);
+    }
 
-   @GetMapping("/generate")
+
+
+
+   /*@GetMapping("/generate")
    public Set<Vote> getVoteByLikeName(@RequestParam String generate){
 
       Set<Vote>voteSet= voteService.getVoteByLikeName(generate);
@@ -44,6 +48,27 @@ public class VoteController {
        return voteService.getAll();
    }
 
-
-
+   @GetMapping("/{userId}")
+   public ResponseEntity<?> getVotesFromAUser(
+           @PathVariable("userId") Long userId) {
+       return new ResponseEntity<>(voteService.findByUserId(userId), HttpStatus.OK);
+   }
+   @GetMapping("/{id}")
+   public List<Vote> getUserByUd(@PathVariable Long id) {
+       List<Vote>voteSet= voteService.getUserByUd(id);
+       return  voteSet;
+   }
+   @GetMapping(value = "/{id}")
+   public ResponseEntity<?> getProductById(@PathVariable Long id) {
+       Vote vote = voteService.findById(id);
+       return new ResponseEntity<Vote>(vote, HttpStatus.OK);
+   }
+   @GetMapping("/{id}")
+   public Vote getVote(@PathVariable Long id){
+       return voteService.findVote(id);
+   }
+    @GetMapping("/votesUsers/{id}")
+    public Set<Vote>findVotesByIdUser(@PathVariable Long id){
+        return voteService.findVotesUserId(id);
+    }*/
 }

@@ -11,6 +11,13 @@ public interface IStartupService {
     StartupDTO findStartup(Long id);
     void deleteStartup(Long id);
     void upDateStartup(Startup startup);
-    Set<StartupDTO> getStartupByLikeName(String name);
+
+    Startup save(Long userId, Startup startup);
+    Set<Startup> startupsByTagName(String name);
+
+
+    //Set<StartupDTO> getStartupByLikeName(String name);
     Set<StartupDTO> getStartupByNotPublished(boolean published);
+    //Set<Startup> getStartupOrderByDesc();
+
 }

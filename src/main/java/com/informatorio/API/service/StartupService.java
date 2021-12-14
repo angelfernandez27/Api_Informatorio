@@ -2,9 +2,15 @@ package com.informatorio.API.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.informatorio.API.entity.Startup;
 import com.informatorio.API.entity.StartupDTO;
+import com.informatorio.API.entity.Tag;
+import com.informatorio.API.entity.User;
 import com.informatorio.API.repository.IStartupRepository;
+import com.informatorio.API.repository.ITagRepository;
+import com.informatorio.API.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.TableGenerator;
 import java.util.*;
 
 @Service
@@ -12,6 +18,10 @@ public class StartupService implements IStartupService {
 
     @Autowired
     IStartupRepository startupRepository;
+    @Autowired
+    IUserRepository userRepository;
+    @Autowired
+    ITagRepository tagRepository;
     @Autowired
     ObjectMapper mapper;
     @Override
@@ -50,8 +60,20 @@ public class StartupService implements IStartupService {
         startupRepository.save(startup);
 
     }
+    @Override
+    public Startup save(Long userId, Startup startup) {
+        User user = userRepository.getById(userId);
+        startup.setCreator(user);
+        return startupRepository.save(startup);
+    }
 
     @Override
+    public Set<Startup> startupsByTagName(String name) {
+        Tag tag= tagRepository.findByName(name);
+        return tag.getStartupSet();
+    }
+
+    /*@Override
     public Set<StartupDTO> getStartupByLikeName(String name) {
         Set<Startup>startups=startupRepository.getStartupByLikeName(name);
         Set<StartupDTO>startupDTOS=new HashSet<>();
@@ -59,7 +81,7 @@ public class StartupService implements IStartupService {
             startupDTOS.add(mapper.convertValue(startup,StartupDTO.class));
         }
         return startupDTOS;
-    }
+    }*/
     @Override
     public Set<StartupDTO> getStartupByNotPublished(boolean published) {
        Set<Startup>startups=startupRepository.getStartupByNotPublished(published);
@@ -69,4 +91,10 @@ public class StartupService implements IStartupService {
         }
         return startupDTOS;
     }
+
+
+
+    //public Set<Startup> getStartupOrderByDesc() {
+      //  return startupRepository.getStartupOrderByDesc();
+    //}
 }

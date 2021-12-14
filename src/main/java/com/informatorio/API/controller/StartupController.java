@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Collection;
 import java.util.Set;
 
@@ -41,14 +42,22 @@ public class StartupController {
         startupService.upDateStartup(startup);
         return ResponseEntity.status(HttpStatus.OK).body("Startup modifiqued");
     }
-    @GetMapping("/listname")
-    public Set<StartupDTO> getStartupByLikeName(@PathVariable String name){
-
+    /*@GetMapping("/list/name")
+    public Set<StartupDTO> getStartupByLikeName(@RequestParam String name){
         return startupService.getStartupByLikeName(name);
-    }
+    }*/
     @GetMapping("/listpublished")
     public Set<StartupDTO> getStartupByNotPublished(@PathVariable boolean published){
         return startupService.getStartupByNotPublished(published);
+    }
+    @PostMapping(value = "/user/{id}/startup")
+    public ResponseEntity<?> saveStartup(@PathVariable("id") Long userId,
+                                                  @RequestBody Startup startup) {
+        return new ResponseEntity<>(startupService.save(userId, startup), HttpStatus.CREATED);
+    }
+    @GetMapping("/startups")
+    public ResponseEntity<?> getAllStartupsByTagName(@RequestParam(name = "name",required = false)String name){
+        return new ResponseEntity<>(startupService.startupsByTagName(name),HttpStatus.OK);
     }
 
 

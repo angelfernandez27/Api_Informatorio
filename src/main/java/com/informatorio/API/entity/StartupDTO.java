@@ -11,7 +11,8 @@ public class StartupDTO {
     private String description;
     private double objective;
     private boolean published;
+    private String content;
     private Set<Url> urls;
-    private String tags;
+    private Tag tag;
     private Date creationDate;
 }

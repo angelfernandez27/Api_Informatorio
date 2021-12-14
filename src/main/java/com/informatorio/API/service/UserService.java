@@ -1,6 +1,7 @@
 package com.informatorio.API.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.informatorio.API.entity.Startup;
 import com.informatorio.API.entity.User;
 import com.informatorio.API.entity.UserDTO;
 import com.informatorio.API.repository.IUserRepository;
@@ -45,4 +46,43 @@ public class UserService implements IUserService {
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
+
+    @Override
+   public Set<UserDTO> getUsersByCity(String city) {
+        Set<User>users=userRepository.getUserByCity(city);
+        Set<UserDTO>userDTOSet=new HashSet<>();
+        for (User user : users) {
+           userDTOSet.add(mapper.convertValue(user,UserDTO.class));
+        }
+        return userDTOSet;
+    }
+
+    @Override
+    public Set<UserDTO> getUserByDate(Date date) {
+        Set<User>users=userRepository.getUserByDate(date);
+        Set<UserDTO>userDTOSet=new HashSet<>();
+        for (User user : users) {
+            userDTOSet.add(mapper.convertValue(user,UserDTO.class));
+        }
+        return userDTOSet;
+    }
+
+    @Override
+    public void upDateUser(User user) {
+        userRepository.save(user);
+    }
+    //no anda
+    @Override
+    public void updateIdUser(Long id,User user) {
+        Optional<User>user1=userRepository.findById(id);
+        if (user1.isPresent()){
+            user=mapper.convertValue(user1,User.class);
+            userRepository.save(user);
+        }
+
+
+    }
+
+
+
 }

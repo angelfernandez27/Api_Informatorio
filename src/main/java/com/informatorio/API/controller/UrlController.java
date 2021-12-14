@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
 @RestController
+@RequestMapping("/urls")
 public class UrlController {
     @Autowired
     IUrlService urlService;

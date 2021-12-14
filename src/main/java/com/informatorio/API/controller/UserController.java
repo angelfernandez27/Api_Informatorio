@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/users")
@@ -31,10 +33,30 @@ public class UserController {
     public UserDTO getUser(@PathVariable Long id){
         return iUserService.findUser(id);
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id){
         iUserService.deleteUser(id);
         return ResponseEntity.status(HttpStatus.OK).body("Usuario eliminado");
+    }
+    @GetMapping("/list/city")
+    public Set<UserDTO> getUsersByCity(@RequestParam("city") String city){
+        return iUserService.getUsersByCity(city);
+    }
+    @GetMapping("/list/date")
+    public Set<UserDTO> getUsersByDate(@RequestParam("date") Date date){
+        return iUserService.getUserByDate(date);
+    }
+    @PutMapping("/update")
+    public ResponseEntity<?> upDateUser(@RequestBody User user){
+        iUserService.upDateUser(user);
+        return ResponseEntity.status(HttpStatus.OK).body("User update");
+    }
+    @PutMapping("/{id}/ula")
+    public ResponseEntity<?>upDateByIdUser(@PathVariable("id")Long id,@RequestBody User user){
+        iUserService.updateIdUser(id,user);
+        return ResponseEntity.status(HttpStatus.OK).body("Update exitoso pa");
+
     }
 
 

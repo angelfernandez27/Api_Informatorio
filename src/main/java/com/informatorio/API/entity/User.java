@@ -1,16 +1,17 @@
 package com.informatorio.API.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.Getter;
 import lombok.Setter;
 
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -42,14 +43,31 @@ public class User {
     @NotEmpty(message = "el campo country no puede estar vacio")
     @Size(min=2, max = 255, message = "el campo country debe tener entre 2 y 255 caracteres")
     private String country;
-    @NotEmpty(message = "el campo typeUser no puede estar vacio")
-    @Size(min=2, max = 255, message = "el campo typeUser debe tener entre 2 y 255 caracteres")
-    private  String typeUser;
+    @NotNull
+    @Enumerated(value = EnumType.STRING)
+    private Type type;
     @OneToMany(mappedBy = "user")
+    private Set<Vote> voteSet=new HashSet<>();
+    @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private Set<Vote> voteSet;
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    private Set<Event> eventSet;
+    private Set<Startup> startupSet = new HashSet<>();
 
+    //@OneToMany(mappedBy = "user")
+    //private Set<Event>eventSet;
+    public void addStartup(Startup startup) {
+        startupSet.add(startup);
+        startup.setCreator(this);
+    }
+    public void removeStartup(Startup startup) {
+        startupSet.remove(startup);
+        startup.setCreator(null);
+    }
+    public void addVote(Vote vote){
+        voteSet.add(vote);
+        vote.setUser(this);
+    }
+    public void removeVote(Vote vote){
+        voteSet.remove(vote);
+        vote.setUser(null);
+    }
 }
