@@ -1,5 +1,4 @@
 package com.informatorio.API.service;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.informatorio.API.entity.Startup;
 import com.informatorio.API.entity.User;
@@ -7,9 +6,7 @@ import com.informatorio.API.entity.UserDTO;
 import com.informatorio.API.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
-
 @Service
 public class UserService implements IUserService {
     @Autowired
@@ -17,11 +14,9 @@ public class UserService implements IUserService {
     @Autowired
     ObjectMapper mapper;
     @Override
-    public void createUser(User user) {
-         userRepository.save(user);
-
+    public User createUser(User user) {
+         return userRepository.save(user);
     }
-
     @Override
     public Collection<UserDTO> getAll() {
         List<User> users= userRepository.findAll();
@@ -31,7 +26,6 @@ public class UserService implements IUserService {
         }
         return userDTOS;
     }
-
     @Override
     public UserDTO findUser(Long id) {
         UserDTO userDTO=null;
@@ -41,12 +35,10 @@ public class UserService implements IUserService {
         }
         return userDTO;
     }
-
     @Override
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
-
     @Override
    public Set<UserDTO> getUsersByCity(String city) {
         Set<User>users=userRepository.getUserByCity(city);
@@ -56,7 +48,6 @@ public class UserService implements IUserService {
         }
         return userDTOSet;
     }
-
     @Override
     public Set<UserDTO> getUserByDate(Date date) {
         Set<User>users=userRepository.getUserByDate(date);
@@ -66,23 +57,34 @@ public class UserService implements IUserService {
         }
         return userDTOSet;
     }
+    @Override
+    public User updateIdUser(Long id,User user) {
+        User userM= userRepository.getById(id);
+        if (!user.getName().trim().isEmpty()) { userM.setName(user.getName());}
+        if (!user.getLastName().trim().isEmpty()) { userM.setLastName(user.getLastName()); }
+        if (!user.getEmail().trim().isEmpty()){userM.setEmail(user.getEmail());}
+        if (!user.getPassword().trim().isEmpty()){userM.setPassword(user.getPassword());}
+        if (!user.getCity().trim().isEmpty()){userM.setCity(user.getCity());}
+        if (!user.getProvince().trim().isEmpty()){userM.setProvince(user.getProvince());}
+        if (!user.getCountry().trim().isEmpty()){userM.setCountry(user.getCountry());}
+        if (user.getType() != null){ userM.setType(user.getType());}
+        userM.setCreationDate(user.getCreationDate());
+        return userRepository.save(userM);
+    }
 
     @Override
-    public void upDateUser(User user) {
+    public void deactivateUser(Long id) {
+        User user=userRepository.getById(id);
+        user.setActive(false);
         userRepository.save(user);
     }
-    //no anda
+
     @Override
-    public void updateIdUser(Long id,User user) {
-        Optional<User>user1=userRepository.findById(id);
-        if (user1.isPresent()){
-            user=mapper.convertValue(user1,User.class);
-            userRepository.save(user);
-        }
-
-
+    public void activateUser(Long id) {
+        User user=userRepository.getById(id);
+        user.setActive(true);
+        userRepository.save(user);
     }
-
 
 
 }

@@ -1,15 +1,11 @@
 package com.informatorio.API.service;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.informatorio.API.entity.Url;
 import com.informatorio.API.entity.UrlDTO;
-import com.informatorio.API.entity.UserDTO;
 import com.informatorio.API.repository.IUrlRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
-
 @Service
 public class UrlService implements IUrlService{
     @Autowired
@@ -21,7 +17,6 @@ public class UrlService implements IUrlService{
         urlRepository.save(url);
 
     }
-
     @Override
     public void deleteUrl(Long id) {
         urlRepository.deleteById(id);
@@ -35,9 +30,7 @@ public class UrlService implements IUrlService{
             urlDTO=mapper.convertValue(url,UrlDTO.class);
         }
         return urlDTO;
-
     }
-
     @Override
     public Collection<UrlDTO> getAll() {
         List<Url>urls=urlRepository.findAll();

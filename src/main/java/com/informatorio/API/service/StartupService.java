@@ -15,7 +15,6 @@ import java.util.*;
 
 @Service
 public class StartupService implements IStartupService {
-
     @Autowired
     IStartupRepository startupRepository;
     @Autowired
@@ -25,11 +24,6 @@ public class StartupService implements IStartupService {
     @Autowired
     ObjectMapper mapper;
     @Override
-    public void createStartup(Startup startup) {
-        startupRepository.save(startup);
-    }
-
-    @Override
     public Collection<StartupDTO> getAllStartups() {
         List<Startup> startupList=startupRepository.findAll();
         Set<StartupDTO>startupDTOS=new HashSet<>();
@@ -38,7 +32,6 @@ public class StartupService implements IStartupService {
         }
         return startupDTOS;
     }
-
     @Override
     public StartupDTO findStartup(Long id) {
         StartupDTO startupDTO=null;
@@ -48,11 +41,18 @@ public class StartupService implements IStartupService {
         }
         return startupDTO;
     }
+    @Override
+    public void deactivateStartup(Long id) {
+        Startup startup=startupRepository.getById(id);
+        startup.setPublished(false);
+        startupRepository.save(startup);
+    }
 
     @Override
-    public void deleteStartup(Long id) {
-        startupRepository.deleteById(id);
-
+    public void activateStartup(Long id) {
+        Startup startup=startupRepository.getById(id);
+        startup.setPublished(true);
+        startupRepository.save(startup);
     }
 
     @Override
@@ -66,35 +66,27 @@ public class StartupService implements IStartupService {
         startup.setCreator(user);
         return startupRepository.save(startup);
     }
-
     @Override
-    public Set<Startup> startupsByTagName(String name) {
-        Tag tag= tagRepository.findByName(name);
-        return tag.getStartupSet();
-    }
-
-    /*@Override
-    public Set<StartupDTO> getStartupByLikeName(String name) {
-        Set<Startup>startups=startupRepository.getStartupByLikeName(name);
+    public Set<StartupDTO> findByLike(String name) {
+        Set<Tag> tag=tagRepository.findByLike(name);
+         //Set<Startup> startups=tag.getStartupSet();
+        Set<Startup>startups=new HashSet<>();
         Set<StartupDTO>startupDTOS=new HashSet<>();
+        for (Tag tag1 : tag) {
+            startups=tag1.getStartupSet();
+        }
         for (Startup startup : startups) {
             startupDTOS.add(mapper.convertValue(startup,StartupDTO.class));
         }
         return startupDTOS;
-    }*/
+    }
     @Override
-    public Set<StartupDTO> getStartupByNotPublished(boolean published) {
-       Set<Startup>startups=startupRepository.getStartupByNotPublished(published);
+    public Set<StartupDTO> getStartupByPublished(boolean published) {
+       Set<Startup>startups=startupRepository.getStartupByPublished(published);
        Set<StartupDTO>startupDTOS=new HashSet<>();
         for (Startup startup : startups) {
             startupDTOS.add(mapper.convertValue(startup,StartupDTO.class));
         }
         return startupDTOS;
     }
-
-
-
-    //public Set<Startup> getStartupOrderByDesc() {
-      //  return startupRepository.getStartupOrderByDesc();
-    //}
 }

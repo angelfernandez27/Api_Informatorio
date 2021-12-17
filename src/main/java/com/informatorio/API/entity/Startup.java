@@ -29,34 +29,31 @@ public class Startup {
     @NotEmpty(message = "el campo content no puede estar vacio")
     @Size(min=3, max = 255, message = "el campo content debe tener entre 4 y 255 caracteres")
     private String content;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User creator;
+
 
     private Date creationDate;
     @Min(value = 0,message="El campo objetive debe ser mayor o igual a cero")
     private double objective;
     //@NotEmpty(message = "el campo published no puede estar vacio")
     private boolean published;
+    private int counterVote;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User creator;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Tag> tags = new HashSet<Tag>();
-
     @OneToMany(mappedBy ="startUp")
     @JsonIgnore
     private Set<Vote> voteSet;
     @OneToMany(mappedBy ="startUp")
-    @JsonIgnore
-    private Set<Url> urls;
-    //@ManyToOne(fetch = FetchType.LAZY)
-    //@JoinColumn(name = "event_id", nullable = false) //Averiguar si es obligatorio y para que sirve
-    //@JsonIgnore
-    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    //private Event event;
+    private Set<Url> urls=new HashSet<Url>();
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Event> events;
     public void addUrl(Url url){
-        urls.add(url);
-        url.setStartUp(this);
+        if (this.urls == null) {
+            this.urls = new HashSet<>();
+        }
+        this.urls.add(url);
     }
     public void removeUrl(Url url){
         urls.remove(url);

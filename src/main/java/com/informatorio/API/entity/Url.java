@@ -1,5 +1,6 @@
 package com.informatorio.API.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +19,7 @@ public class Url {
     @Size(min=2, max = 255, message = "el campo url debe tener entre 2 y 255 caracteres")
     private String url;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "startup_id",nullable = false) //Averiguar si es obligatorio y para que sirve
+    @JoinColumn(name = "startup_id",nullable = false)
+    @JsonIgnore
     private Startup startUp;
 }

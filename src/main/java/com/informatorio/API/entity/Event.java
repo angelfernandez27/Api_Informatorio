@@ -1,10 +1,8 @@
 package com.informatorio.API.entity;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -24,33 +22,22 @@ public class Event {
     private String descriptionEvent;
     private Date creationDate;
     private Date closureDate;
+    private boolean active;
     @NotEmpty(message = "el campo stateno puede estar vacio")
     @Size(min=1, max = 255, message = "el campo state debe tener entre 2 y 255 caracteres")
     private String state;
-    //Falta lista de emprendimientos subscribers
-
     @Min(value = 0,message="El campo objetive debe ser mayor o igual a cero")
     private double prize;
-
-    //@ManyToOne(fetch = FetchType.LAZY)
-    //@JoinColumn(name = "user_id", insertable = true, nullable = false, updatable = false) //Averiguar si es obligatorio y para que sirve
-    //@JsonIgnore
-    //private User user;
-    //@OneToMany(mappedBy ="event")
-    //@JsonIgnore
-    //private Set<Startup> startupSet;
-
     @ManyToMany(mappedBy = "events")
+    @JsonIgnoreProperties({"creator","description","content","dateCreation","objective","published","tags"})
+    @OrderBy("counterVote DESC")
     private Set<Startup> startupSet;
-
-
-
-    /*public void addStartup(Startup startup){
+    public void addStartup(Startup startup){
         startupSet.add(startup);
-        startup.setEvent(this);
+        startup.addEvent(this);
     }
     public void removeStartup(Startup startup){
         startupSet.remove(startup);
-        startup.setEvent(null);
-    }*/
+        startup.addEvent(null);
+    }
 }

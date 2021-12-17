@@ -1,15 +1,17 @@
 package com.informatorio.API.controller;
 
 import com.informatorio.API.entity.Event;
-import com.informatorio.API.entity.Startup;
+import com.informatorio.API.entity.EventDTO;
+import com.informatorio.API.exception.ApiException;
+import com.informatorio.API.repository.IEventRepository;
 import com.informatorio.API.service.IEventService;
-import com.informatorio.API.service.IStartupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -17,6 +19,8 @@ import java.util.Set;
 public class EventController {
     @Autowired
     IEventService eventService;
+    @Autowired
+    IEventRepository eventRepository;
 
 
     @PostMapping
@@ -24,30 +28,40 @@ public class EventController {
         eventService.createEvent(event);
         return ResponseEntity.ok(HttpStatus.OK);
     }
-    @GetMapping("/{id}")
-    public Event findById(@PathVariable("id") Long id){
-        return eventService.findEventById(id);
+    @GetMapping("/ranking/{id}")
+    public Optional<Event> rankingEventById(@PathVariable("id") Long id) throws ApiException {
+        if (!eventRepository.findById(id).isPresent()){
+            throw new ApiException("id does not exist");
+        }
+        return  eventService.rankingEventId(id);
     }
     @GetMapping("/list")
-    public List<Event> getAll(){
+    public Set<EventDTO> getAll(){
         return eventService.getAll();
     }
-    @PutMapping()
-    public ResponseEntity<?> updateEvent(Event event){
+    @PutMapping("/update/{idEvent}")
+    public ResponseEntity<?> updateEvent(@Valid @PathVariable("idEvent") Long idEvent,@Valid @RequestBody Event event) throws ApiException {
+        if (eventRepository.getById(idEvent).getId()!=event.getId()){
+         throw new ApiException("id does not match");
+        }
         eventService.UpDateEvent(event);
         return ResponseEntity.status(HttpStatus.OK).body("Update Event");
     }
-    @DeleteMapping("/{id}")
-    public void deleteEvent(@PathVariable("id") Long id){
-        eventService.deleteEvent(id);
+
+    @PutMapping("/deactivate/{id}")
+    public ResponseEntity<?> deactivateEvent(@PathVariable Long id) throws ApiException {
+        if (!eventRepository.findById(id).isPresent()){
+            throw new ApiException("id does not exist");
+        }
+        eventService.deactivateEvent(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Event deactivated");
     }
-    //Traigo el ranking de startup
-    //@GetMapping("/orderStartup")
-    //public Set<Startup> getStartupOrderByDesc(){
-      //  return startupService.getStartupOrderByDesc();
-    //}
-    @GetMapping("/orderStartup")
-    public Set<Event>getEventOrderByDesc(){
-        return eventService.getEventOrderByDesc();
+    @PutMapping("/activate/{id}")
+    public ResponseEntity<?> activateEvent(@PathVariable Long id) throws ApiException {
+        if (!eventRepository.findById(id).isPresent()){
+            throw new ApiException("id does not exist");
+        }
+        eventService.activateEvent(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Event activated");
     }
 }
