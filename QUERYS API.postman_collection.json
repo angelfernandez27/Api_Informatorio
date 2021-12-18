@@ -1,0 +1,583 @@
+{
+	"info": {
+		"_postman_id": "8c5c41d6-d772-4737-b743-77ccc99e2b76",
+		"name": "QUERYS API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "getUserByCity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users/list/city?city=resistencia",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"list",
+								"city"
+							],
+							"query": [
+								{
+									"key": "city",
+									"value": "resistencia"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUserByDate",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users/list/date?date=21/12/14",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"list",
+								"date"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "21/12/14"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUsersById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"chavo\",\r\n    \"lastName\": \"delocho\",\r\n    \"email\": \"chavo@gmail.com\",\r\n    \"password\":1122,\r\n    \"creationDate\": \"2021-10-20T12:00:00.000+00:00\",\r\n    \"city\": \"Resistencia\",\r\n    \"province\": \"Chaco\",\r\n    \"country\": \"Argentina\",\r\n    \"type\": \"USER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"JulianJosé\",\r\n    \"password\":\"6666\",\r\n    \"lastName\": \"Alvarez\",\r\n    \"email\": \"julian@gmail.com\",\r\n    \"city\": \"Resistencia\",\r\n    \"province\": \"Chaco\",\r\n    \"country\": \"Argentina\",\r\n    \"creationDate\": \"2021-02-03T18:59:57.779+00:00\",\r\n    \"type\": \"OWNER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/users/userId/2/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"userId",
+								"2",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllUsers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users/list",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activateUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "desactivateUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Startup",
+			"item": [
+				{
+					"name": "getStartupsAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/startup/list",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"startup",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getStartupById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/startup/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"startup",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateStartupByIdUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"assa\",\r\n    \"description\": \"asa asa smart\",\r\n    \"content\": \"SpacasaseX\",\r\n    \"creationDate\": \"2021-10-20T12:00:00.000+00:00\",\r\n    \"objective\": 2000.0,\r\n    \"published\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/startup/user/3/startup",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"startup",
+								"user",
+								"3",
+								"startup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscarporTag",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/startup/like?name=a",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"startup",
+								"like"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deactivateStartupById",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/startup/deactivate/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"startup",
+								"deactivate",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activateStartupById",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/startup/activate/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"startup",
+								"activate",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateStartup",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Tecno Game OX\",\r\n    \"content\":\"Ventas\",\r\n    \"description\": \"Venta\",\r\n    \"objective\": 2133.0,\r\n    \"published\": true,\r\n    \"creationDate\": \"2021-10-11T00:00:00.000+00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/startup/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"startup",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getStartupPublishedFalse",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/startup/list/published?published=0",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"startup",
+								"list",
+								"published"
+							],
+							"query": [
+								{
+									"key": "published",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getStartupByPublishedTrue",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/startup/list/published?published=1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"startup",
+								"list",
+								"published"
+							],
+							"query": [
+								{
+									"key": "published",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Event",
+			"item": [
+				{
+					"name": "CreateEvents",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"descriptionEvent\": \"Game\",\r\n    \"creationDate\": \"2021-12-20T00:00:00.000+00:00\",\r\n    \"closureDate\": \"2022-01-01T00:00:00.000+00:00\",\r\n    \"state\": \"ABIERTO\",\r\n    \"active\":1,\r\n    \"prize\": 9000.0   \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/events",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "desactivateEventById",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/events/deactivate/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"events",
+								"deactivate",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activateEventById",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/events/activate/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"events",
+								"activate",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateEvent",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":2,\r\n    \"descriptionEvent\": \"criptomonedas\",\r\n    \"creationDate\": \"2021-12-20T00:00:00.000+00:00\",\r\n    \"closureDate\": \"2022-01-01T00:00:00.000+00:00\",\r\n    \"state\": \"ABIERTO\",\r\n    \"active\":1,\r\n    \"prize\": 9000.0   \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/events/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"events",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getRanking",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/events/ranking/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"events",
+								"ranking",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vote",
+			"item": [
+				{
+					"name": "getVotesByUserId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "createVote",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 5,\r\n    \"generateBy\": \"mobile\",\r\n    \"creationDate\": \"2021-12-15T16:32:00.000+00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/votes/createVote/userId/2/startupId/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"votes",
+								"createVote",
+								"userId",
+								"2",
+								"startupId",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getVoteById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/votes/4",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"votes",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
